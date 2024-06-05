@@ -311,13 +311,6 @@ class ilOpencastPageComponentPluginGUI extends ilPageComponentPluginGUI
         return $form;
     }
 
-    public function insert(): void
-    {
-        $this->addToolbar();
-        $table = $this->getTable();
-        $this->main_tpl->setContent($table->getHTML());
-    }
-
     protected function applyFilter(): void
     {
         $table = $this->getTable(false);
@@ -335,6 +328,22 @@ class ilOpencastPageComponentPluginGUI extends ilPageComponentPluginGUI
         $table->storeProperty('offset', 0);
         $table->resetFilter();
         $this->redirect(self::CMD_INSERT);
+    }
+
+    public function insert(): void
+    {
+        $ui = $this->container->uiIntegration($this->plugin);
+
+        $target_url = new URI(ILIAS_HTTP_PATH . '/' . $this->dic->ctrl()->getLinkTarget($this, self::CMD_CREATE));
+
+        $this->main_tpl->setContent(
+            $this->dic->ui()->renderer()->render([
+                $ui->mine()->asItemGroup(
+                    $target_url,
+                    self::PROP_EVENT_ID
+                )
+            ])
+        );
     }
 
     public function create(): void
