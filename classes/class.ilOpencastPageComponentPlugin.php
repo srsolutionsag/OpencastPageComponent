@@ -25,7 +25,7 @@ class ilOpencastPageComponentPlugin extends ilPageComponentPlugin
     public const PLUGIN_NAME = "OpencastPageComponent";
 
     public const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = OpencastPageComponentRemoveDataConfirm::class;
-    protected const MAIN_PLUGIN_VERSION_NEEDED = '9.2.0';
+    protected const MAIN_PLUGIN_VERSION_NEEDED = '11.0.0';
     /**
      * @var ilOpencastPageComponentPlugin|null
      */
@@ -43,20 +43,9 @@ class ilOpencastPageComponentPlugin extends ilPageComponentPlugin
             return self::$cache;
         }
 
-        // check if we are in ILIAS 8 context
-        if (isset($DIC['component.factory'])) {
-            /** @var ilComponentFactory $component_factory */
-            $component_factory = $DIC['component.factory'];
-            /** @var $plugin ilOpencastPageComponentPlugin */
-            return self::$cache = $component_factory->getPlugin('ocpc');
-        }
-        // otherwise we are in ILIAS 7 context
-        return self::$cache = new self();
-    }
-
-    public function __construct(ilDBInterface $db, ilComponentRepositoryWrite $component_repository, string $id)
-    {
-        parent::__construct($db, $component_repository, $id);
+        /** @var ilComponentFactory $component_factory */
+        $component_factory = $DIC['component.factory'];
+        return self::$cache = $component_factory->getPlugin(self::PLUGIN_ID);
     }
 
     protected function beforeActivation(): bool

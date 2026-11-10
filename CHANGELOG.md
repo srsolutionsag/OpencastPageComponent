@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 11.0.0
+- [FEATURE] ILIAS 11 Support
+
 ## Version 10.0.0
 - [FEATURE] ILIAS 10 Support
 

@@ -38,7 +38,7 @@ class Edit implements ViewElement
     public const RATIO_AS_PUBLICATION = -1;
     private Factory $ui_factory;
     private EventAPIRepository $event_repository;
-    private array $ratio_option = [];
+    private array $ratio_option;
 
     public function __construct(
         private array $properties,
@@ -145,7 +145,7 @@ class Edit implements ViewElement
         // calculate aspect ratio
         $aspect_ratio = (float) ($size[0] / $size[1]);
 
-        $ratios = array_map('floatval', array_keys($this->ratio_option));
+        $ratios = array_map(floatval(...), array_keys($this->ratio_option));
 
         $closest_ratio = null;
         $closest_diff = PHP_FLOAT_MAX;

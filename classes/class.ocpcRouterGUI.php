@@ -79,19 +79,17 @@ class ocpcRouterGUI
             $this->dic->ui()->mainTemplate()->addJavaScript($main_opencast_js_path);
         }
 
-        switch ($next_class) {
-            case strtolower(xoctPlayerGUI::class):
-                if (!$this->checkPlayerAccess()) {
-                    $this->main_tpl->setOnScreenMessage('failure', 'Access Denied.');
-                    $this->dic->ctrl()->returnToParent($this);
-                }
-                $xoctPlayerGUI = new xoctPlayerGUI(
-                    $this->event_repository,
-                    $this->legacy_container->paella_config_storage_service(),
-                    $this->legacy_container->paella_config_service_factory()
-                );
-                $xoctPlayerGUI->streamVideo();
-                break;
+        if ($next_class === strtolower(xoctPlayerGUI::class)) {
+            if (!$this->checkPlayerAccess()) {
+                $this->main_tpl->setOnScreenMessage('failure', 'Access Denied.');
+                $this->dic->ctrl()->returnToParent($this);
+            }
+            $xoctPlayerGUI = new xoctPlayerGUI(
+                $this->event_repository,
+                $this->legacy_container->paella_config_storage_service(),
+                $this->legacy_container->paella_config_service_factory()
+            );
+            $xoctPlayerGUI->streamVideo();
         }
     }
 

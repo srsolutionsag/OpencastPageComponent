@@ -39,7 +39,7 @@ class Config
     public static function getField(string $key)
     {
         $repo = new ConfigRepository();
-        return $repo->get($key, null)->getValue();
+        return $repo->get($key)->getValue();
     }
 
     /**
@@ -48,7 +48,7 @@ class Config
     public static function setField(string $key, $value): void
     {
         $repo = new ConfigRepository();
-        $config = $repo->get($key, null)->getValue();
+        $config = $repo->get($key)->getValue();
         $config->setValue($value);
         $repo->store($config);
     }

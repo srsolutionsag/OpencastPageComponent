@@ -92,7 +92,7 @@ class Display implements ViewElement
 
         $tpl->setVariable('CONTENT', $content);
 
-        return $this->ui_factory->legacy(
+        return $this->ui_factory->legacy()->content(
             $tpl->get()
         );
     }
@@ -119,8 +119,9 @@ class Display implements ViewElement
             $tpl->setVariable('TARGET', '_blank');
             $tpl->setVariable('VIDEO_LINK', $use_modal ? '#' : $this->getPlayerLink($event));
             if ($use_modal) {
-                $tpl->setVariable('MODAL', $renderer->getPlayerModal()->getHTML());
-                $tpl->setVariable('MODAL_LINK', $renderer->getModalLink());
+                $modal = $renderer->getPlayerModal();
+                $tpl->setVariable('MODAL', $this->container->ilias()->ui()->renderer()->render($modal));
+                $tpl->setVariable('MODAL_LINK', $renderer->getModalLink($modal));
             }
         } else {
             $tpl->setVariable('VIDEO_LINK', '#');
